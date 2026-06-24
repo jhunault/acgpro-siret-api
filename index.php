@@ -19,7 +19,7 @@ $response1 = curl_exec($ch);
 $err1 = curl_error($ch);
 curl_close($ch);
 
-/* Si Annuaire-Entreprises répond correctement */
+/* Si Annuaire-Entreprises rÃ©pond correctement */
 if ($response1 !== false && strpos($response1, '"results"') !== false) {
     echo $response1;
     exit;
@@ -27,7 +27,7 @@ if ($response1 !== false && strpos($response1, '"results"') !== false) {
 
 /* ---------------------------------------------------------
    2) BASCULE AUTOMATIQUE ? API SIRENE (INSEE)
-   Cette API fonctionne même quand Annuaire-Entreprises est KO
+   Cette API fonctionne mÃªme quand Annuaire-Entreprises est KO
 --------------------------------------------------------- */
 $url2 = "https://entreprise.data.gouv.fr/api/sirene/v3/etablissements?nom_raison_sociale=$nom&code_postal=$cp";
 
@@ -41,14 +41,14 @@ $response2 = curl_exec($ch);
 $err2 = curl_error($ch);
 curl_close($ch);
 
-/* Si SIRENE répond */
+/* Si SIRENE rÃ©pond */
 if ($response2 !== false && strpos($response2, '"etablissements"') !== false) {
     echo $response2;
     exit;
 }
 
 /* ---------------------------------------------------------
-   3) Si les deux APIs échouent ? message d’erreur détaillé
+   3) Si les deux APIs Ã©chouent ? message dâ€™erreur dÃ©taillÃ©
 --------------------------------------------------------- */
 echo json_encode([
     "error" => "Aucune API accessible",
