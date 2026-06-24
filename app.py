@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
 import requests
 
 app = Flask(__name__)
@@ -8,10 +8,19 @@ def siret():
     nom = request.args.get("nom", "")
     cp = request.args.get("cp", "")
 
+    if nom == "" or cp == "":
+        return "Paramètres manquants"
+
     url = f"https://api.annuaire-entreprises.data.gouv.fr/search?q={nom}&code_postal={cp}"
     r = requests.get(url)
+    data = r.json()
 
-    return jsonify(r.json())
+    try:
+        siret = data["results"][0]["siret"]
+        return siret
+    except:
+        return "Aucun résultat"
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+@app.route("/health")
+def health():
+    return "OK"
